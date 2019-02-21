@@ -7,6 +7,10 @@ module.exports = {
     connection: {
       filename: './data/recipebook.sqlite3'
     },
-    useNullAsDefault: true
+    useNullAsDefault: true,
+    migrations: {
+      directory: './migrations',
+      tableName: 'recipebook'
+    }
   }
 };

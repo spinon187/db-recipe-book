@@ -11,6 +11,7 @@ exports.up = function(knex, Promise) {
             .onDelete('CASCADE')
             .onUpdate('CASCADE')
             .notNullable();
+        tbl.string('instructions');
         tbl.timestamps(true, true);
     });
 };
