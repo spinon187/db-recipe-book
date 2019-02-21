@@ -11,7 +11,7 @@ const errors = {
   '19': 'Another record with that value exists',
 };
 
-server.get('/api/dishes', async (req, res) => {
+server.get('/api/dishes', (req, res) => {
     db
         .getDishes()
         .then(dishes => {
@@ -22,7 +22,7 @@ server.get('/api/dishes', async (req, res) => {
         })
 })
 
-server.post('/api/dishes', async (req, res) => {
+server.post('/api/dishes', (req, res) => {
     const dish = req.body
     
     db
@@ -35,7 +35,7 @@ server.post('/api/dishes', async (req, res) => {
         })
 })
 
-server.get('/api/dishes/:name', async (req, res) => {
+server.get('/api/dishes/:name', (req, res) => {
     const name = req.params.name
     db
         .getDish(name)
@@ -51,18 +51,18 @@ server.get('/api/dishes/:name', async (req, res) => {
     });
 })
 
-server.put('/api/dishes/:name', async (req, res) => {
+server.put('/api/dishes/:name', (req, res) => {
   const name = req.params.name;
 
 });
 
-server.delete('/api/dishes/:name', async (req, res) => {
+server.delete('/api/dishes/:name', (req, res) => {
   const name = req.params.name;
   
 });
 
 
-server.get('/api/dishes/:dish_name/recipes', async (req, res) => {
+server.get('/api/dishes/:dish_name/recipes', (req, res) => {
     const dish = req.params.dish_name;
 
     db
@@ -75,7 +75,7 @@ server.get('/api/dishes/:dish_name/recipes', async (req, res) => {
         })
 })
 
-server.post('/api/dishes/:dish_name/recipes', async (req, res) => {
+server.post('/api/dishes/:dish_name/recipes', (req, res) => {
     const dishName = req.params.dish_name;
     const recipeObj = {name: req.body.name, dish_name: dishName}
 
@@ -89,48 +89,34 @@ server.post('/api/dishes/:dish_name/recipes', async (req, res) => {
         })
   })
 
-server.get('/api/dishes/:dish_name/recipes/:name', async (req, res) => {
+server.get('/api/dishes/:dish_name/recipes/:name', (req, res) => {
     const name = req.params.name;
     
     
 })
 
-  server.put('/api/dishes/:dish_name/recipes/:id', async (req, res) => {
-    const id = req.params.id;
-    try {
-      const count = await db('recipes')
-        .where({id})
-        .update(req.body);
-      if (count > 0) {
-        const recipe = await db('recipes')
-          .where({id})
-          .first();
-        res.status(200).json(recipe);
-      }
-      else {
-        res.status(404).json({message: 'not found'});
-      }
-    } 
-    catch(error){}
-  });
+server.put('/api/dishes/:dish_name/recipes/:name', (req, res) => {
+    const name = req.params.name;
 
-  server.delete('/api/dishes/:dish_name/recipes/:id', async (req, res) => {
-    const id = req.params.id;
-    
-    try {
-      const count = await db('recipes')
-        .where({id})
-        .del();
-  
-      if (count > 0) {
-        res.status(204).end();
-      }
-      else {
-        res.status(404).json({message: 'not found'});
-      }
-    }
-    catch (error){}
-  });
+});
+
+server.delete('/api/dishes/:dish_name/recipes/:name', (req, res) => {
+    const name = req.params.name;
+
+});
+
+server.get('/api/dishes/:dish_name/recipes/:name', async (req, res) => {
+    const name = req.params.name;
+    const dishName = req.params.dish_name;
+    db
+        .getRecipe(name)
+        .then(ingredients => {
+            res.status(200).json({name: name, dish_name: dishName, ingredients: ingredients})
+        })
+        .catch(error => {
+            res.status(500).json({error: error});
+        })
+})
 
 const port = 3300;
 server.listen(port, function() {

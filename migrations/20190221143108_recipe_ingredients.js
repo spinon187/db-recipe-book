@@ -2,7 +2,6 @@
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('recipe_ingredients', function(tbl){
         tbl.increments('id');
-        tbl.string('name', 128).notNullable().unique();
         tbl
             .string('recipe_name')
             .unsigned()
@@ -15,7 +14,7 @@ exports.up = function(knex, Promise) {
             .string('ingredient_name')
             .unsigned()
             .references('name')
-            .inTable('ingredient')
+            .inTable('ingredients')
             // .onDelete('CASCADE')
             // .onUpdate('CASCADE')
             .notNullable();

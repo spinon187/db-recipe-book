@@ -8,6 +8,7 @@ module.exports = {
   getDish,
   getRecipes,
   addRecipe,
+  getRecipe
 };
 
 function getDishes(){
@@ -30,4 +31,8 @@ function getRecipes(dish){
 function addRecipe(recipe){
     return db('recipes')
     .insert(recipe)
+}
+
+function getRecipe(recipe){
+    return db('recipe_ingredients').where({recipe_name: recipe})
 }
