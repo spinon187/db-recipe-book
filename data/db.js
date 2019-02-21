@@ -19,12 +19,12 @@ function addDish(dish){
         .insert(dish)
 }
 
-function getDish(id){
-    return db('dishes').where({id: Number(id)}).first();
+function getDish(dish){
+    return db('dishes').where({name: dish}).first();
 }
 
-function getRecipes(){
-    return db('recipes');
+function getRecipes(dish){
+    return db('recipes').where({dish_name: dish});
 }
 
 function addRecipe(recipe){

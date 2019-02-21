@@ -11,6 +11,9 @@ module.exports = {
     migrations: {
       directory: './migrations',
       tableName: 'recipebook'
+    },
+    seeds: {
+      directory: './data/seeds'
     }
   }
 };
